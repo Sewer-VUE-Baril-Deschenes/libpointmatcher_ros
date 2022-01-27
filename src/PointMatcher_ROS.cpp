@@ -13,7 +13,6 @@ typename PointMatcher<T>::DataPoints PointMatcher_ROS::rosMsgToPointMatcherCloud
 	typedef typename DataPoints::Labels Labels;
 	typedef typename DataPoints::View View;
 	typedef typename DataPoints::TimeView TimeView;
-	
 	Labels featLabels;
 	Labels descLabels;
 	Labels timeLabels;
@@ -73,6 +72,7 @@ typename PointMatcher<T>::DataPoints PointMatcher_ROS::rosMsgToPointMatcherCloud
 		{
 			timeLabels.push_back(Label(name, count));
 			isFeature.push_back(false);
+            fieldTypes.push_back(PM_types::TIME);
 		}
 		else
 		{
@@ -81,16 +81,13 @@ typename PointMatcher<T>::DataPoints PointMatcher_ROS::rosMsgToPointMatcherCloud
 			fieldTypes.push_back(PM_types::DESCRIPTOR);
 		}
 	}
-	
 	featLabels.push_back(Label("pad", 1));
 	assert(isFeature.size() == rosMsg.fields.size());
 	assert(fieldTypes.size() == rosMsg.fields.size());
-	
 	// create cloud
 	const unsigned pointCount(rosMsg.width * rosMsg.height);
 	DataPoints cloud(featLabels, descLabels, timeLabels, pointCount);
 	cloud.getFeatureViewByName("pad").setConstant(1);
-	
 	// fill cloud
 	typedef sensor_msgs::PointField PF;
 	size_t fieldId = 0;
@@ -243,7 +240,7 @@ typename PointMatcher<T>::DataPoints PointMatcher_ROS::rosMsgToPointMatcherCloud
 			}
 		}
 	}
-	
+
 	return cloud;
 }
 
