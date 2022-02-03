@@ -65,6 +65,7 @@ typename PointMatcher<T>::DataPoints PointMatcher_ROS::rosMsgToPointMatcherCloud
 			timeLabels.push_back(Label(beginning, 1));
 			it += 1;
 			isFeature.push_back(false);
+			isFeature.push_back(false);
 			fieldTypes.push_back(PM_types::TIME);
 			fieldTypes.push_back(PM_types::TIME);
 		}
